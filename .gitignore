@@ -1,0 +1,21 @@
+# Gradle cache and build
+.gradle/
+build/
+app/build/
+
+# VS Code local settings
+.vscode/
+
+# Compiled class files
+*.class
+
+# Logs
+*.log
+
+# Package Files
+*.jar
+*.war
+*.ear
+
+# macOS (por si acaso)
+.DS_Store
