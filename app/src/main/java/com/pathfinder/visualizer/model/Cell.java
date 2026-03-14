@@ -1,5 +1,6 @@
 package com.pathfinder.visualizer.model;
 
+
 public class Cell {
 
     // Atributos
