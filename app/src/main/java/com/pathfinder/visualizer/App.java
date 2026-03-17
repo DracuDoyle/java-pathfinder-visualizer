@@ -17,8 +17,11 @@ public class App {
         start.setState( CellState.START );
         target.setState( CellState.TARGET );
 
-        BFS bfs = new BFS();
-        bfs.execute( maze, start, target );
+        // BFS bfs = new BFS();
+        // bfs.execute( maze, start, target );
+
+        DFS dfs = new DFS();
+        dfs.execute( maze, start, target );
 
         for( int i = 0; i < 5; i++ ) {
             for( int j = 0; j < 5; j++ ) {
