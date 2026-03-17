@@ -13,6 +13,7 @@ import java.util.List;
 
 public class DFS implements PathfindingAlgorithm {
     
+    
     public void execute( Maze maze, Cell start, Cell target ) {
         
         Deque< Cell > stack = new ArrayDeque<>();
