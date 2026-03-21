@@ -6,8 +6,10 @@ import com.pathfinder.visualizer.model.*;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -25,18 +27,46 @@ public class Dijkstra implements PathfindingAlgorithm {
 
         pq.add( start );
         parent.put( start, null );
-        visited.add( start ); // despues de sacarlo de la cola segun
 
         initDistance( maze, distance );
         distance.put( start, 0 );
 
         while( ! pq.isEmpty() ) {
 
-            // a. Sacar celda con menor distancia → current
-            // b. SI current == target → reconstruir camino y terminar
-            // c. SI current ya está en visited → continue
-            // d. Agregar current a visited y marcarlo como VISITED
+            Cell current = pq.poll();
 
+            if( current == target ) {
+
+                rebuildPath( parent, start, target );
+
+            } else {
+
+                if( ! visited.contains( current ) ) {
+
+                    if( current != start && current != target ) {
+                        current.setState( CellState.VISITED );
+                    }
+                    
+                    visited.add( current );
+
+                    List<Cell> neighbors = maze.getNeighbors( current );
+
+                    for( Cell neighbor : neighbors ) {
+
+                        int newDist = distance.get( current ) + neighbor.getWeight();
+
+                        if( newDist < distance.get( neighbor ) ) {
+                            distance.put( neighbor, newDist );
+                            parent.put( neighbor, current );
+                            pq.add( neighbor );
+                        }
+
+                    }
+
+                } else { continue; }
+
+            }
+            
         }
 
     }
@@ -48,6 +78,29 @@ public class Dijkstra implements PathfindingAlgorithm {
                 distance.put( maze.getCell( i, j ), Integer.MAX_VALUE );
             }
         }
+    }
+
+
+    private void rebuildPath( Map< Cell, Cell > parent, Cell start, Cell target ) {
+
+        List<Cell> path = new ArrayList<>();
+        Cell current = target;
+
+        while( current != start ) {
+            path.add( current );
+            current = parent.get( current );
+        }
+
+        path.add( start );
+
+        for( Cell cell : path ) {
+            
+            if( cell != start && cell != target ) {
+                cell.setState( CellState.INPATH );
+            }
+        
+        }
+
     }
 
     

@@ -20,8 +20,11 @@ public class App {
         // BFS bfs = new BFS();
         // bfs.execute( maze, start, target );
 
-        DFS dfs = new DFS();
-        dfs.execute( maze, start, target );
+        // DFS dfs = new DFS();
+        // dfs.execute( maze, start, target );
+
+        Dijkstra dijkstra = new Dijkstra();
+        dijkstra.execute( maze, start, target );
 
         for( int i = 0; i < 5; i++ ) {
             for( int j = 0; j < 5; j++ ) {
