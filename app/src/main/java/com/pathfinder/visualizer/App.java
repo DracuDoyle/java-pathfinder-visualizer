@@ -23,8 +23,11 @@ public class App {
         // DFS dfs = new DFS();
         // dfs.execute( maze, start, target );
 
-        Dijkstra dijkstra = new Dijkstra();
-        dijkstra.execute( maze, start, target );
+        // Dijkstra dijkstra = new Dijkstra();
+        // dijkstra.execute( maze, start, target );
+
+        AStar astar = new AStar();
+        astar.execute( maze, start, target );
 
         for( int i = 0; i < 5; i++ ) {
             for( int j = 0; j < 5; j++ ) {
