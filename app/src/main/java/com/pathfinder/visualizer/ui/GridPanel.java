@@ -17,11 +17,17 @@ public class GridPanel extends JPanel {
 
 
     private Maze maze;
+    private Cell startCell;
+    private Cell targetCell;
+    private Boolean stateRightClick;
 
 
     public GridPanel( Maze maze ) {
         
         this.maze = maze;
+        this.startCell = null;
+        this.targetCell = null;
+        this.stateRightClick = false;
 
         addMouseListener( new MouseAdapter() {
             // Click izquierdo = pintar paredes
@@ -58,6 +64,57 @@ public class GridPanel extends JPanel {
 
             repaint();
         
+        }
+
+        // Con click derecho
+        if( SwingUtilities.isRightMouseButton( e ) ) {
+            
+            // Ancho y Largo de cada celda
+            int cellWidth = getWidth() / maze.getColumns();
+            int cellHeight = getHeight() / maze.getRows();
+
+            // Obtener coordenadas dentro de la grilla
+            int col = e.getX() / cellWidth;
+            int row = e.getY() / cellHeight;
+
+            // Obtener celda
+            Cell current = maze.getCell( row, col );
+
+            // Primer click derecho = START
+            if( startCell == null ) {
+
+                startCell = current;
+                current.setState( CellState.START );
+
+            // Segundo click derecho = TARGET
+            } else if( targetCell == null  ) {
+                
+                targetCell = current;
+                current.setState( CellState.TARGET );
+            
+            // Alternar clicks entre START y TARGET
+            } else {
+
+                if( stateRightClick == false ) {
+                    
+                    startCell.setState( CellState.EMPTY );
+                    startCell = current;
+                    current.setState( CellState.START );
+                    stateRightClick = true;
+
+                } else if( stateRightClick == true ) {
+
+                    targetCell.setState( CellState.EMPTY );
+                    targetCell = current;
+                    current.setState( CellState.TARGET );
+                    stateRightClick = false;
+                
+                }
+
+            }
+
+            repaint();
+
         }
     
     }
